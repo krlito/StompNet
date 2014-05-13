@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("StompNet")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Asynchronous STOMP 1.2 client library for .NET 4.5.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Carlos Campo")]
 [assembly: AssemblyProduct("StompNet")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
