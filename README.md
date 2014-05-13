@@ -21,46 +21,46 @@ StompNet is an asynchronous STOMP 1.2 client library for .NET 4.5.
 The following code is an example to show the basic usage of StompNet.
 
 ```csharp
-	// Example of sending three messages before receiving them back.
+	// Example: Send three messages before receiving them back.
 	static async Task ReadmeExample()
     {
 		// Establish a TCP connection with the STOMP service.
         using (TcpClient tcpClient = new TcpClient())
-
-		//Create a connector.
-        using (IStompConnector stompConnector = 
-            new Stomp12Connector(
-                tcpClient.GetStream(),
-                "virtualHostName", 
-                "admin", 
-                "password"))
         {
-			// Establish a TCP connection with the STOMP service.
             await tcpClient.ConnectAsync("localhost", 61613);
 
-            // Create a connection.
-            IStompConnection connection = await stompConnector.ConnectAsync();
+            //Create a connector.
+            using (IStompConnector stompConnector =
+                new Stomp12Connector(
+                    tcpClient.GetStream(),
+                    "localhost", // Virtual host name.
+                    "admin",
+                    "password"))
+            {
+                // Create a connection.
+                IStompConnection connection = await stompConnector.ConnectAsync();
 
-            // Send a message.
-            await connection.SendAsync("/queue/example", "Anybody there!?");
+                // Send a message.
+                await connection.SendAsync("/queue/example", "Anybody there!?");
 
-            // Send two messages using a transaction.
-            IStompTransaction transaction = await connection.BeginTransactionAsync();
-            await transaction.SendAsync("/queue/example", "Hi!");
-            await transaction.SendAsync("/queue/example", "My name is StompNet");
-            await transaction.CommitAsync();
-                
-            // Receive messages back.
-			// Message handling is made by the ConsoleWriterObserver instance.
-            await transaction.SubscribeAsync(
-				new ConsoleWriterObserver(),
-				"/queue/example");
+                // Send two messages using a transaction.
+                IStompTransaction transaction = await connection.BeginTransactionAsync();
+                await transaction.SendAsync("/queue/example", "Hi!");
+                await transaction.SendAsync("/queue/example", "My name is StompNet");
+                await transaction.CommitAsync();
 
-            // Wait for messages to be received.
-            await Task.Delay(250);
+                // Receive messages back.
+                // Message handling is made by the ConsoleWriterObserver instance.
+                await transaction.SubscribeAsync(
+                    new ConsoleWriterObserver(),
+                    "/queue/example");
 
-            // Disconnect.
-            await connection.DisconnectAsync();
+                // Wait for messages to be received.
+                await Task.Delay(250);
+
+                // Disconnect.
+                await connection.DisconnectAsync();
+            }
         }
     }
 ```
