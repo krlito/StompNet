@@ -41,6 +41,7 @@ namespace StompNet.IO
 
         private readonly IStompFrameObservable _frameObservable;
         private readonly IStompFrameWriter _frameWriter;
+        private readonly StompHeartbeatManager _heartbeatManager;
         private readonly ISequenceNumberGenerator _receiptNumberGenerator;
         private readonly ISequenceNumberGenerator _subscriptionNumberGenerator;
         private readonly ISequenceNumberGenerator _transactionNumberGenerator;
@@ -71,6 +72,7 @@ namespace StompNet.IO
 
             _frameObservable = new StompFrameObservable(reader);
             _frameWriter = new StompFrameWriterWithConfirmation(writer, _frameObservable, retryInterval);
+            _heartbeatManager = new StompHeartbeatManager(this,  _frameObservable);
             
             if (!useRandomNumberGenerator)
             {
@@ -131,6 +133,7 @@ namespace StompNet.IO
             if(_disposed) return;
 
             _frameWriter.Dispose();
+            _heartbeatManager.Dispose();
             if(_cascadeDispose)
             {
                 _reader.Dispose();

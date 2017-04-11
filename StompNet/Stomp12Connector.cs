@@ -104,11 +104,12 @@ namespace StompNet
         /// <returns>A task representing the connect operation.</returns>
         public async Task<IStompConnection> ConnectAsync(
             IEnumerable<KeyValuePair<string, string>> extraHeaders = null,
+            Heartbeat heartbeat = null,
             CancellationToken? cancellationToken = null)
         {
             _client.Start(_cts.Token);
 
-            await _client.WriteConnectAsync(_host, _user, _password, Heartbeat.NoHeartbeat, extraHeaders, cancellationToken);
+            await _client.WriteConnectAsync(_host, _user, _password, heartbeat ?? Heartbeat.NoHeartbeat, extraHeaders, cancellationToken);
 
             return new StompConnection(_client);
         }

@@ -187,5 +187,11 @@ namespace StompNet.IO
             Frame frame = StompFrameFactory.CreateDisconnect(receipt, extraHeaders);
             return writer.WriteAsync(frame, cancelToken);
         }
+
+        public static Task WriteHearbeatAsync(this IStompFrameWriter writer, CancellationToken? cancellationToken = null)
+        {
+            CancellationToken cancelToken = cancellationToken ?? CancellationToken.None;
+            return writer.WriteAsync(Frame.HeartbeatFrame, cancelToken);
+        }
     }
 }
