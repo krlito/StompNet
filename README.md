@@ -37,8 +37,8 @@ The following code is an example to show the basic usage of StompNet.
                     "admin",
                     "password"))
             {
-                // Create a connection.
-                IStompConnection connection = await stompConnector.ConnectAsync();
+                // Create a connection using an hearbeat.
+                IStompConnection connection = await stompConnector.ConnectAsync(heartbeat: new Heartbeat(30000, 30000));
 
                 // Send a message.
                 await connection.SendAsync("/queue/example", "Anybody there!?");
@@ -122,7 +122,6 @@ you can see how to:
 Apache License 2.0
 
 ## ToDo
-- Heartbeat support
 - STOMP 1.1 support
 
 [reactive-extensions]: http://msdn.microsoft.com/en-us/data/gg577609.aspx
