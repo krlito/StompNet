@@ -104,7 +104,7 @@ namespace StompNet.IO
                 {
                     shouldStartSendingHeartbeat = true;
                 }
-                await Task.Delay((int)Math.Max(0, interval - (DateTime.UtcNow - LastActivityTime).TotalMilliseconds), sendHBToken.Token)
+                await Task.Delay(interval, sendHBToken.Token)
                     .ContinueWith(t => { }); ;
             }
         }
