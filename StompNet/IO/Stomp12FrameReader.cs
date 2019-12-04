@@ -215,8 +215,15 @@ namespace StompNet.IO
             {
                 body = new byte[contentLength];
 
-                int byteCount = await _reader.ReadBytesAsync(body, 0, contentLength, cancellationToken);
-                if (byteCount != contentLength)
+                var offset = 0;
+
+                while (contentLength > offset)
+                {
+                    var byteCount = await _reader.ReadBytesAsync(body, offset, contentLength - offset, cancellationToken);
+                    offset += byteCount;
+                }
+
+                if (offset != contentLength)
                     throw new InvalidDataException("Body actual length is different from content-length (=" + StompHeaders.ContentLength + ").");
 
                 byte b = await _reader.ReadByteAsync(cancellationToken);
