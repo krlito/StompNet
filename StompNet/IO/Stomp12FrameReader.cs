@@ -113,8 +113,18 @@ namespace StompNet.IO
 
                 if (read.TargetChar == '\n')
                 {
-                    if (read.String.Length == 0) break;
-                    throw new InvalidDataException("Connected header names MUST not contain LF characters.");
+                    if (read.String.Length == 0)
+                    {
+                        break;
+                    }
+                    else if (read.String.Length == 1 && read.String[0] == '\r')
+                    {
+                        throw new InvalidDataException("Connected header line containing only a carriage return.");
+                    }
+                    else
+                    {
+                        throw new InvalidDataException("Connected header name without value.");
+                    }
                 }
 
                 if (read.String.Length == 0)
@@ -140,7 +150,19 @@ namespace StompNet.IO
             {
                 // Get Header Name
                 char ch = await _reader.ReadCharAsync(cancellationToken);
-                if(ch == '\n') break;
+                if (ch == '\n')
+                {
+                    break;
+                }
+                else if (ch == '\r')
+                {
+                    if (await _reader.ReadCharAsync(cancellationToken) == '\n')
+                    {
+                        break;
+                    }
+                    throw new InvalidDataException("Header data MUST not contain CR, LF or ':' characters.");
+                }
+
                 stringBuilder.Clear();
 
                 while (ch != ':')
@@ -215,9 +237,7 @@ namespace StompNet.IO
             {
                 body = new byte[contentLength];
 
-                int byteCount = await _reader.ReadBytesAsync(body, 0, contentLength, cancellationToken);
-                if (byteCount != contentLength)
-                    throw new InvalidDataException("Body actual length is different from content-length (=" + StompHeaders.ContentLength + ").");
+                await _reader.ReadNBytesAsync(body, 0, contentLength, cancellationToken);
 
                 byte b = await _reader.ReadByteAsync(cancellationToken);
                 if (b != 0)

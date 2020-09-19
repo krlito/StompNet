@@ -76,11 +76,31 @@ namespace StompNet.IO
             }
         }
 
+        public Task<int> ReadBytesAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        {
+            return ThrowIfCancellationRequested(
+                    _stream.ReadAsync(buffer, offset, count, cancellationToken),
+                    cancellationToken);
+        }
+
+        public async Task ReadNBytesAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        {
+            int totalRead = 0;
+            while (totalRead < count)
+            {
+                int bRead = await ReadBytesAsync(buffer, offset + totalRead, count - totalRead, cancellationToken);
+
+                if (bRead == 0)
+                {
+                    throw new EndOfStreamException();
+                }
+                totalRead += bRead;
+            }
+        }
+
         public async Task<byte> ReadByteAsync(CancellationToken cancellationToken)
         {
-            await ThrowIfCancellationRequested(
-                _stream.ReadAsync(_oneByte, 0, 1, cancellationToken),
-                cancellationToken);
+            await ReadNBytesAsync(_oneByte, 0, 1, cancellationToken);
 
             return _oneByte[0];
         }
@@ -89,21 +109,12 @@ namespace StompNet.IO
         {
             do
             {
-                await ThrowIfCancellationRequested(
-                    _stream.ReadAsync(_oneByte, 0, 1, cancellationToken),
-                    cancellationToken);
+                await ReadNBytesAsync(_oneByte, 0, 1, cancellationToken);
             } while (_decoder.GetChars(_oneByte, 0, 1, _oneChar, 0, false) == 0);
 
             return _oneChar[0];
         }
 
-        public Task<int> ReadBytesAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
-        {
-            return ThrowIfCancellationRequested(
-                    _stream.ReadAsync(buffer, offset, count, cancellationToken),
-                    cancellationToken);
-        }
-        
         public async Task<byte[]> ReadBytesUntilAsync(byte targetByte, CancellationToken cancellationToken)
         {
             _memoryStream.Seek(0, SeekOrigin.Begin);
