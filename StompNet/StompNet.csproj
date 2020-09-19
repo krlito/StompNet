@@ -65,6 +65,7 @@
     <Compile Include="IO\StompFrameObservable.cs" />
     <Compile Include="IO\StompFrameWriterExtensions.cs" />
     <Compile Include="IO\StompFrameWriterWithConfirmation.cs" />
+    <Compile Include="IO\StompHeartbeatManager.cs" />
     <Compile Include="IO\StompSerialFrameReader.cs" />
     <Compile Include="IO\StompSerialFrameWriter.cs" />
     <Compile Include="IStompConnection.cs" />

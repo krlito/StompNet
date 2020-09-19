@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using StompNet.Models.Frames;
 
 namespace StompNet
 {
@@ -36,7 +37,8 @@ namespace StompNet
         /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
         /// <returns>A task representing the connect operation.</returns>
         Task<IStompConnection> ConnectAsync(
-            IEnumerable<KeyValuePair<string, string>> extraHeaders = null,
+            IEnumerable<KeyValuePair<string, string>> extraHeaders = null, 
+            Heartbeat heartbeat = null,
             CancellationToken? cancellationToken = null);
     }
 }

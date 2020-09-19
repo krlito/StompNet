@@ -16,7 +16,6 @@
  * 
  *******************************************************************************/
 
-using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -84,6 +83,10 @@ namespace StompNet.IO
 
                 await _writer.WriteAsync(frame.BodyArray, cancellationToken);
                 await _writer.WriteAsync(StompOctets.EndOfFrameByte, cancellationToken);
+            }
+            else if (frame.Command == StompCommands.Heartbeat)
+            {
+                await _writer.WriteAsync(StompOctets.LineFeedByte, cancellationToken);
             }
             else
             {

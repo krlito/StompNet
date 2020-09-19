@@ -24,6 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using StompNet;
 using StompNet.Models;
+using StompNet.Models.Frames;
 
 namespace Stomp.Net.Examples
 {
@@ -58,7 +59,7 @@ namespace Stomp.Net.Examples
             using (IStompConnector stompConnector = new Stomp12Connector(tcpClient.GetStream(), virtualHost, login, passcode))
             {
                 //Connect to the STOMP service.
-                IStompConnection connection = await stompConnector.ConnectAsync();
+                IStompConnection connection = await stompConnector.ConnectAsync(heartbeat: new Heartbeat(30000, 30000));
 
                 // Send a couple of messages with string content.
                 for (int i = 1; i <= 2; i++)
