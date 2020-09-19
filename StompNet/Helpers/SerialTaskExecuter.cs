@@ -84,18 +84,18 @@ namespace StompNet.Helpers
     {
         public static void TrySet<T>(this TaskCompletionSource<T> tcs, Task task) where T : class 
         {
-            if (task.IsCompleted)
-            {
-                Task<T> taskWithResult = task as Task<T>;
-                tcs.TrySetResult(taskWithResult == null ? null : taskWithResult.Result);
-            }
-            else if (task.IsFaulted)
+            if (task.IsFaulted)
             {
                 tcs.TrySetException(task.Exception.InnerExceptions);
             }
-            else
+            else if (task.IsCanceled)
             {
                 tcs.TrySetCanceled();
+            }
+            else
+            {
+                Task<T> taskWithResult = task as Task<T>;
+                tcs.TrySetResult(taskWithResult == null ? null : taskWithResult.Result);
             }
         }
     }
