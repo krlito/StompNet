@@ -16,15 +16,15 @@ StompNet is an asynchronous [STOMP 1.2][stomp12specification] client library for
  On your Package Manager Console:
     Install-Package StompNet
 
-##Usage
+## Usage
 
 The following code is an example to show the basic usage of StompNet.
 
 ```csharp
-	// Example: Send three messages before receiving them back.
-	static async Task ReadmeExample()
+    // Example: Send three messages before receiving them back.
+    static async Task ReadmeExample()
     {
-		// Establish a TCP connection with the STOMP service.
+        // Establish a TCP connection with the STOMP service.
         using (TcpClient tcpClient = new TcpClient())
         {
             await tcpClient.ConnectAsync("localhost", 61613);
@@ -71,7 +71,7 @@ The observer `ConsoleWriterObserver` class for handling the incoming messages is
 ```csharp
     class ConsoleWriterObserver : IObserver<IStompMessage>
     {
-	    // Incoming messages are processed here.
+        // Incoming messages are processed here.
         public void OnNext(IStompMessage message)
         {
             Console.WriteLine("MESSAGE: " + message.GetContentAsString());
@@ -80,13 +80,13 @@ The observer `ConsoleWriterObserver` class for handling the incoming messages is
                 message.Acknowledge();
         }
 
-		// Any ERROR frame or stream exception comes through here.
+        // Any ERROR frame or stream exception comes through here.
         public void OnError(Exception error)
         {
             Console.WriteLine("ERROR: " + error.Message);
         }
 
-		// OnCompleted is invoked when unsubscribing.
+        // OnCompleted is invoked when unsubscribing.
         public void OnCompleted()
         {
             Console.WriteLine("UNSUBSCRIBED!");
