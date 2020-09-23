@@ -1,5 +1,5 @@
 # StompNet
-StompNet is an asynchronous [STOMP 1.2][stomp12specification] client library for .NET 4.5.
+StompNet is an asynchronous [STOMP 1.2][stomp12specification] client library for .NET 4.5 and .NET Standard 1.5.
 
 ## Features
 - High level interfaces to ease the flow of the application.

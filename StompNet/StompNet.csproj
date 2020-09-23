@@ -1,103 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2BE5619B-B63B-4583-B434-371C925FE18C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StompNet</RootNamespace>
-    <AssemblyName>StompNet</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Exceptions\ErrorFrameException.cs" />
-    <Compile Include="Helpers\ActionDisposable.cs" />
-    <Compile Include="Helpers\ActionObserver.cs" />
-    <Compile Include="Helpers\AsyncActionDisposable.cs" />
-    <Compile Include="Helpers\EnumerableExtensions.cs" />
-    <Compile Include="Helpers\ISequenceNumberGenerator.cs" />
-    <Compile Include="Helpers\ITaskExecuter.cs" />
-    <Compile Include="Helpers\ObservableExtensions.cs" />
-    <Compile Include="Helpers\RandomSequenceNumberGenerator.cs" />
-    <Compile Include="Helpers\SequenceNumberGenerator.cs" />
-    <Compile Include="Helpers\SerialTaskExecuter.cs" />
-    <Compile Include="IAsyncDisposable.cs" />
-    <Compile Include="IO\AsyncStreamReader.cs" />
-    <Compile Include="IO\AsyncStreamWriter.cs" />
-    <Compile Include="IO\IStompClient.cs" />
-    <Compile Include="IO\IStompFrameObservable.cs" />
-    <Compile Include="IO\IStompFrameReader.cs" />
-    <Compile Include="IO\IStompFrameWriter.cs" />
-    <Compile Include="IO\Stomp12Client.cs" />
-    <Compile Include="IO\Stomp12FrameReader.cs" />
-    <Compile Include="IO\Stomp12FrameWriter.cs" />
-    <Compile Include="IO\StompClient.cs" />
-    <Compile Include="IO\StompFrameObservable.cs" />
-    <Compile Include="IO\StompFrameWriterExtensions.cs" />
-    <Compile Include="IO\StompFrameWriterWithConfirmation.cs" />
-    <Compile Include="IO\StompSerialFrameReader.cs" />
-    <Compile Include="IO\StompSerialFrameWriter.cs" />
-    <Compile Include="IStompConnection.cs" />
-    <Compile Include="IStompConnectionBase.cs" />
-    <Compile Include="IStompConnector.cs" />
-    <Compile Include="IStompMessage.cs" />
-    <Compile Include="IStompTransaction.cs" />
-    <Compile Include="Models\Frames\ConnectedFrame.cs" />
-    <Compile Include="Models\Frames\ErrorFrame.cs" />
-    <Compile Include="Models\Frames\Frame.cs" />
-    <Compile Include="Models\Frames\Heartbeat.cs" />
-    <Compile Include="Models\Frames\MessageFrame.cs" />
-    <Compile Include="Models\Frames\ReceiptFrame.cs" />
-    <Compile Include="Models\StompAckValues.cs" />
-    <Compile Include="Models\StompCommands.cs" />
-    <Compile Include="Models\StompFrameFactory.cs" />
-    <Compile Include="Models\StompHeaders.cs" />
-    <Compile Include="Models\StompInterpreter.cs" />
-    <Compile Include="Models\StompOctets.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stomp12Connector.cs" />
-    <Compile Include="StompConnection.cs" />
-    <Compile Include="StompConnectionBase.cs" />
-    <Compile Include="StompMessage.cs" />
-    <Compile Include="StompSubscription.cs" />
-    <Compile Include="StompTransaction.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net45;netstandard15</TargetFrameworks>
+		<DefineConstants></DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Version>1.0.1.0</Version>
+		<Description>Asynchronous STOMP 1.2 client library for .NET.</Description>
+		<Company>Carlos Campo</Company>
+		<Copyright>Copyright © Carlos Campo 2020</Copyright>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Authors>Carlos Campo</Authors>
+		<PackageTags>stomp;nms;activemq;message broker client</PackageTags>
+		<PackageProjectUrl>https://github.com/krlito/StompNet</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/krlito/StompNet</RepositoryUrl>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<IncludeSymbols>true</IncludeSymbols>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="..\\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+	</ItemGroup>
 </Project>

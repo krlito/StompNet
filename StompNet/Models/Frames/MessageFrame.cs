@@ -15,9 +15,9 @@
  *  limitations under the License.
  * 
  *******************************************************************************/
- 
+
+using StompNet.Helpers;
 using System.Collections.Generic;
-using System.Net.Mime;
 
 namespace StompNet.Models.Frames
 {
@@ -83,7 +83,7 @@ namespace StompNet.Models.Frames
                 if (string.IsNullOrEmpty(Subscription))
                     ThrowMandatoryHeaderException(StompHeaders.Subscription);
                 if(string.IsNullOrEmpty(ContentType))
-                    ContentType = MediaTypeNames.Application.Octet;
+                    ContentType = MediaTypeNames.ApplicationOctet;
             }
 
             ContentLength = BodyArray.Length;

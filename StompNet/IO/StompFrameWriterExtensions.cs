@@ -17,10 +17,10 @@
  *******************************************************************************/
 
 using System.Collections.Generic;
-using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using StompNet.Helpers;
 using StompNet.Models;
 using StompNet.Models.Frames;
 
@@ -49,7 +49,7 @@ namespace StompNet.IO
             this IStompFrameWriter writer,
             string destination,
             byte[] body = null,
-            string contentType = MediaTypeNames.Application.Octet,
+            string contentType = MediaTypeNames.ApplicationOctet,
             string receipt = null,
             string transaction = null,
             IEnumerable<KeyValuePair<string, string>> extraHeaders = null,

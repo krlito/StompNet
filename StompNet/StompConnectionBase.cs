@@ -18,7 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,7 +45,7 @@ namespace StompNet
         public Task SendAsync(
             string destination,
             byte[] content = null,
-            string contentType = MediaTypeNames.Application.Octet,
+            string contentType = MediaTypeNames.ApplicationOctet,
             bool useReceipt = false,
             IEnumerable<KeyValuePair<string, string>> extraHeaders = null,
             CancellationToken? cancellationToken = null)
