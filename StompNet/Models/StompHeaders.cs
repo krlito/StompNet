@@ -42,5 +42,6 @@ namespace StompNet.Models
         public const string Subscription = "subscription";
         public const string Transaction = "transaction";
         public const string Version = "version";
+        public const string Expiration = "expiration";
     }
 }
